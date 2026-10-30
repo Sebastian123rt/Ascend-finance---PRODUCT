@@ -1,12 +1,19 @@
 import React from 'react';
-import { User, Clock, ShieldCheck, ArrowRight } from 'lucide-react';
+import { User, Clock, ShieldCheck, ArrowRight, Zap, Server, Activity } from 'lucide-react';
 import { AscendLogo } from './AscendLogo';
 
 interface ScreenBrokerPanelProps {
+  currentTime?: number;
   isMobile?: boolean;
 }
 
-export const ScreenBrokerPanel: React.FC<ScreenBrokerPanelProps> = ({ isMobile = false }) => {
+export const ScreenBrokerPanel: React.FC<ScreenBrokerPanelProps> = ({
+  currentTime = 0,
+  isMobile = false,
+}) => {
+  // First 1.4 seconds show the incoming webhook sync event from the broker platform
+  const isIncomingSync = currentTime < 1.4;
+
   return (
     <div className="flex flex-col h-full w-full justify-between p-6 sm:p-8 text-slate-100">
       {/* Top Header */}
@@ -17,21 +24,46 @@ export const ScreenBrokerPanel: React.FC<ScreenBrokerPanelProps> = ({ isMobile =
             <div className="text-xs font-semibold uppercase tracking-wider text-amber-400">
               Ascend Finance
             </div>
-            <div className="text-xl sm:text-2xl font-bold tracking-tight text-white">
-              Broker Console
+            <div className="text-xl sm:text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+              <span>Broker Console</span>
             </div>
           </div>
         </div>
 
-        {/* Live indicator */}
+        {/* Live Broker Connection Badge */}
         <div className="flex items-center gap-2 px-3 py-1 bg-slate-900 border border-slate-800 rounded-md">
-          <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-          <span className="text-xs font-medium text-slate-300">Incoming Request</span>
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="text-left">
+            <span className="text-[10px] text-slate-400 font-mono-numbers block leading-none">Broker API Bridge</span>
+            <span className="text-xs font-semibold text-emerald-300">Connected</span>
+          </div>
         </div>
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col justify-center py-4 space-y-6">
+      <div className="flex-1 flex flex-col justify-center py-3 space-y-4">
+        {/* Dynamic Webhook Ingestion Notification (highlights connection from broker's withdrawal request) */}
+        <div className="bg-gradient-to-r from-amber-950/40 via-slate-900 to-slate-900 border border-amber-500/30 rounded-xl px-4 py-2.5 flex items-center justify-between text-xs transition-all">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+              <Zap className="w-4 h-4 animate-pulse" />
+            </div>
+            <div>
+              <span className="font-semibold text-white block">
+                {isIncomingSync ? '⚡ Ingesting Trader Withdrawal Request' : '✓ Webhook Synced from Broker Portal'}
+              </span>
+              <span className="text-[11px] text-slate-400 font-mono-numbers">
+                Source: MetaTrader 5 / Prop Portal Gateway · Latency: 32ms
+              </span>
+            </div>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded bg-slate-950 border border-slate-800 font-mono-numbers text-[10px] text-amber-300">
+            <Activity className="w-3 h-3 text-emerald-400" />
+            <span>Event: #WD-94021</span>
+          </div>
+        </div>
+
         {/* Trader Details Card */}
         <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 sm:p-6 shadow-2xl backdrop-blur-sm">
           <div className="flex items-center justify-between border-b border-slate-800/70 pb-4 mb-4">
@@ -40,7 +72,10 @@ export const ScreenBrokerPanel: React.FC<ScreenBrokerPanelProps> = ({ isMobile =
                 <User className="w-6 h-6" />
               </div>
               <div>
-                <span className="text-xs text-slate-400 font-medium block">Trader Account</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-slate-400 font-medium block">Trader Account</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-800 text-slate-300 font-mono-numbers">TR-8819</span>
+                </div>
                 <span className="text-xl sm:text-2xl font-bold text-white tracking-tight">Carlos M.</span>
               </div>
             </div>
@@ -68,12 +103,12 @@ export const ScreenBrokerPanel: React.FC<ScreenBrokerPanelProps> = ({ isMobile =
               </span>
             </div>
             <p className="text-xs text-slate-500 mt-1 font-mono-numbers">
-              Nominal equivalent: $1,250.00 USD
+              Nominal equivalent: $1,250.00 USD · Origin: Broker Trading Balance
             </p>
           </div>
 
           {/* Current Status */}
-          <div className="mt-5 pt-4 border-t border-slate-800/70 flex flex-wrap items-center justify-between gap-3">
+          <div className="mt-4 pt-3.5 border-t border-slate-800/70 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <Clock className="w-5 h-5 text-amber-400" />
               <span className="text-sm text-slate-400 font-medium">Status:</span>
@@ -102,7 +137,7 @@ export const ScreenBrokerPanel: React.FC<ScreenBrokerPanelProps> = ({ isMobile =
               “Manual approval required if risk is medium or high.”
             </div>
             <p className="text-xs text-slate-400 mt-1">
-              Disbursements are evaluated in real-time according to institutional risk policies set by the broker.
+              Disbursements from broker accounts are evaluated instantly according to firm-level risk thresholds.
             </p>
           </div>
         </div>
@@ -111,7 +146,7 @@ export const ScreenBrokerPanel: React.FC<ScreenBrokerPanelProps> = ({ isMobile =
       {/* Footer */}
       <div className="pt-2 text-center border-t border-slate-800/50">
         <span className="text-xs text-slate-500 tracking-wider">
-          Phase 1 of 3 · Incoming trader request awaiting review
+          Phase 1 of 3 · Connected via Broker Webhook Bridge (Auto-Ingestion)
         </span>
       </div>
     </div>

@@ -7,7 +7,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { AscendLogo } from './components/AscendLogo';
 import { DeviceFrame } from './components/DeviceFrame';
 import { TimelineController } from './components/TimelineController';
-import { EyeOff, Video } from 'lucide-react';
+import { BrokerIntegrationModal } from './components/BrokerIntegrationModal';
+import { EyeOff, Video, Server, Network } from 'lucide-react';
 
 export default function App() {
   // Current playback time in seconds (0.0 to 10.0)
@@ -15,6 +16,7 @@ export default function App() {
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [deviceMode, setDeviceMode] = useState<'mobile' | 'desktop'>('desktop');
   const [isCleanMode, setIsCleanMode] = useState<boolean>(false);
+  const [isIntegrationModalOpen, setIsIntegrationModalOpen] = useState<boolean>(false);
 
   // High precision animation frame ref
   const lastTimestampRef = useRef<number | null>(null);
@@ -100,6 +102,9 @@ export default function App() {
       } else if (e.key === 'm' || e.key === 'M') {
         e.preventDefault();
         setDeviceMode((prev) => (prev === 'mobile' ? 'desktop' : 'mobile'));
+      } else if (e.key === 'i' || e.key === 'I') {
+        e.preventDefault();
+        setIsIntegrationModalOpen((prev) => !prev);
       }
     };
 
@@ -135,13 +140,21 @@ export default function App() {
             <AscendLogo size={38} showText={true} mottoText={true} />
           </div>
 
-          <div className="hidden md:flex items-center gap-3">
-            <div className="px-3.5 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-medium flex items-center gap-2">
+          <div className="flex items-center gap-3">
+            {/* Broker & Prop Firm Integration Architecture Button */}
+            <button
+              type="button"
+              onClick={() => setIsIntegrationModalOpen(true)}
+              className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-850 border border-slate-700/80 text-slate-200 hover:text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-sm"
+              title="See how Ascend Finance integrates with your broker/prop firm withdrawal system (I)"
+            >
+              <Network className="w-3.5 h-3.5 text-amber-400" />
+              <span>How It Connects to Broker</span>
+            </button>
+
+            <div className="hidden lg:flex px-3.5 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-medium items-center gap-2">
               <Video className="w-3.5 h-3.5 text-amber-400" />
-              <span>10s Demo Mode · Built for investor & broker presentation video</span>
-            </div>
-            <div className="px-3.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 text-xs font-mono-numbers">
-              60 FPS Synchronized
+              <span>10s Video Take · 60 FPS</span>
             </div>
           </div>
         </header>
@@ -172,15 +185,22 @@ export default function App() {
             onChangeDeviceMode={setDeviceMode}
             isCleanMode={isCleanMode}
             onToggleCleanMode={() => setIsCleanMode(true)}
+            onOpenIntegration={() => setIsIntegrationModalOpen(true)}
           />
 
           <div className="mt-3 text-center">
             <p className="text-[11px] text-slate-400">
-              Infrastructure for Digital Assets. Built for Real-World Finance. · Interactive Executive Prototype
+              Infrastructure for Digital Assets. Built for Real-World Finance. · Interactive Executive Prototype for Brokers & Prop Firms
             </p>
           </div>
         </footer>
       )}
+
+      {/* Broker Integration Architecture Modal */}
+      <BrokerIntegrationModal
+        isOpen={isIntegrationModalOpen}
+        onClose={() => setIsIntegrationModalOpen(false)}
+      />
     </div>
   );
 }

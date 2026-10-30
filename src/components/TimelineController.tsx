@@ -18,6 +18,7 @@ interface TimelineControllerProps {
   onChangeDeviceMode: (mode: 'mobile' | 'desktop') => void;
   isCleanMode: boolean;
   onToggleCleanMode: () => void;
+  onOpenIntegration?: () => void;
 }
 
 export const TimelineController: React.FC<TimelineControllerProps> = ({
@@ -30,13 +31,14 @@ export const TimelineController: React.FC<TimelineControllerProps> = ({
   onChangeDeviceMode,
   isCleanMode,
   onToggleCleanMode,
+  onOpenIntegration,
 }) => {
   // Markers on the timeline: 0s, 3s, 7s, 10s
   const markers = [
-    { time: 0.0, label: '0s: Broker Console', phase: 1 },
-    { time: 3.0, label: '3s: Payment Review', phase: 2 },
+    { time: 0.0, label: '0s: Broker Webhook & Console', phase: 1 },
+    { time: 3.0, label: '3s: Risk Review', phase: 2 },
     { time: 7.0, label: '7s: Broker Decision', phase: 3 },
-    { time: 10.0, label: '10s: Demo End', phase: 4 },
+    { time: 10.0, label: '10s: Approved Payout', phase: 4 },
   ];
 
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,6 +150,19 @@ export const TimelineController: React.FC<TimelineControllerProps> = ({
               <span className="hidden sm:inline">Desktop</span>
             </button>
           </div>
+
+          {/* Broker Integration Flow (Modal for LinkedIn viewers & prop firms) */}
+          {onOpenIntegration && (
+            <button
+              type="button"
+              onClick={onOpenIntegration}
+              className="px-3 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-750 border border-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm"
+              title="How Ascend connects to your broker/prop firm stack"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span className="hidden sm:inline">Broker API Architecture</span>
+            </button>
+          )}
 
           {/* Clean Screen Mode Button */}
           <button

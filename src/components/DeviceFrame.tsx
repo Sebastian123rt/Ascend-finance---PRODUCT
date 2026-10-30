@@ -59,7 +59,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
                   activeScreenIndex === 1 ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none'
                 }`}
               >
-                <ScreenBrokerPanel isMobile={true} />
+                <ScreenBrokerPanel currentTime={currentTime} isMobile={true} />
               </div>
 
               {/* Screen 2: Payment Review */}
@@ -129,7 +129,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
                 activeScreenIndex === 1 ? 'opacity-100 z-10' : 'opacity-0 pointer-events-none'
               }`}
             >
-              <ScreenBrokerPanel isMobile={false} />
+              <ScreenBrokerPanel currentTime={currentTime} isMobile={false} />
             </div>
 
             {/* Screen 2: Payment Review */}
