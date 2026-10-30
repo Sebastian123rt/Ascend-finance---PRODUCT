@@ -1,0 +1,7 @@
+{
+  "name": "Ascend Finance",
+  "description": "Infrastructure for Digital Assets. Built for Real-World Finance. Interactive demo prototype for brokers and prop trading firms.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
