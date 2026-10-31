@@ -118,7 +118,7 @@ export const AscendLogo: React.FC<AscendLogoProps> = ({
       {showText && (
         <div className="flex flex-col">
           <span className="font-bold tracking-tight text-white leading-none text-xl">
-            Ascend <span className="text-amber-400 font-semibold">Finance</span>
+            Ascend <span className="text-white font-semibold">Finance</span>
           </span>
           {mottoText && (
             <span className="text-[11px] text-slate-400 tracking-wide font-normal mt-1 leading-tight">
