@@ -23,7 +23,7 @@ export const VirtualCursor: React.FC<VirtualCursorProps> = ({
   const timeIntoPhase = currentTime - 7.0; // 0.0 to 3.0
 
   // Coordinates (percentage relative to device frame)
-  // Target is the center of the "Aprobar" button
+  // Target is the center of the "Approve" button
   const startX = isMobile ? 78 : 74;
   const startY = isMobile ? 86 : 84;
   const targetX = 50; // Center aligned button

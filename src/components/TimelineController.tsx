@@ -33,12 +33,36 @@ export const TimelineController: React.FC<TimelineControllerProps> = ({
   onToggleCleanMode,
   onOpenIntegration,
 }) => {
-  // Markers on the timeline: 0s, 3s, 7s, 10s
+  // Markers on the timeline: 4 equal columns (0s, 3s, 7s, 10s) with strict symmetrical spacing
   const markers = [
-    { time: 0.0, label: '0s: Broker Webhook & Console', phase: 1 },
-    { time: 3.0, label: '3s: Risk Review', phase: 2 },
-    { time: 7.0, label: '7s: Broker Decision', phase: 3 },
-    { time: 10.0, label: '10s: Approved Payout', phase: 4 },
+    {
+      time: 0.0,
+      shortLabel: '0s: Webhook',
+      fullLabel: '0s: Broker Webhook & Console',
+      alignClass: 'items-start text-left',
+      dotClass: 'ml-0.5',
+    },
+    {
+      time: 3.0,
+      shortLabel: '3s: Review',
+      fullLabel: '3s: Risk Review',
+      alignClass: 'items-center text-center',
+      dotClass: 'mx-auto',
+    },
+    {
+      time: 7.0,
+      shortLabel: '7s: Decision',
+      fullLabel: '7s: Broker Decision',
+      alignClass: 'items-center text-center',
+      dotClass: 'mx-auto',
+    },
+    {
+      time: 10.0,
+      shortLabel: '10s: Approved',
+      fullLabel: '10s: Approved Payout',
+      alignClass: 'items-end text-right',
+      dotClass: 'mr-0.5',
+    },
   ];
 
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -180,7 +204,7 @@ export const TimelineController: React.FC<TimelineControllerProps> = ({
 
       {/* Interactive Timeline Scrubber with Milestones */}
       <div className="space-y-2">
-        <div className="relative pt-2 pb-1">
+        <div className="relative pt-2 pb-2">
           {/* Custom Slider Input */}
           <input
             type="range"
@@ -198,32 +222,32 @@ export const TimelineController: React.FC<TimelineControllerProps> = ({
             style={{ width: `${currentPercentage}%` }}
           />
 
-          {/* Milestone Markers at 0s, 3s, 7s, 10s */}
-          <div className="relative w-full h-6 mt-1 flex justify-between select-none">
+          {/* Strict 4-Column Equal Layout for Scrubber Labels (Symmetrical Spacing) */}
+          <div className="grid grid-cols-4 w-full px-4 mt-2 select-none">
             {markers.map((marker) => {
-              const leftPercent = (marker.time / 10.0) * 100;
               const isPassed = currentTime >= marker.time;
+
               return (
                 <button
                   key={marker.time}
                   type="button"
                   onClick={() => onSeek(marker.time)}
-                  className="absolute -translate-x-1/2 flex flex-col items-center group focus:outline-none"
-                  style={{ left: `${leftPercent}%` }}
+                  className={`flex flex-col group focus:outline-none transition-all ${marker.alignClass}`}
                 >
                   <div
                     className={`w-2.5 h-2.5 rounded-full transition-transform group-hover:scale-125 border ${
                       isPassed
-                        ? 'bg-amber-400 border-amber-300'
-                        : 'bg-slate-750 border-slate-600'
-                    }`}
+                        ? 'bg-amber-400 border-amber-300 shadow-[0_0_8px_rgba(251,191,36,0.5)]'
+                        : 'bg-slate-800 border-slate-600'
+                    } ${marker.dotClass}`}
                   />
                   <span
-                    className={`text-[10px] sm:text-xs font-mono-numbers font-medium mt-1 whitespace-nowrap ${
-                      isPassed ? 'text-amber-300' : 'text-slate-400'
+                    className={`text-[10px] sm:text-[11px] lg:text-xs font-mono-numbers font-medium mt-1 whitespace-nowrap transition-colors ${
+                      isPassed ? 'text-amber-300 font-semibold' : 'text-slate-400 group-hover:text-slate-300'
                     }`}
                   >
-                    {marker.label}
+                    <span className="hidden sm:inline">{marker.fullLabel}</span>
+                    <span className="sm:hidden">{marker.shortLabel}</span>
                   </span>
                 </button>
               );

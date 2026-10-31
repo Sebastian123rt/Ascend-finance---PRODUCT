@@ -32,7 +32,7 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
       {/* Device Shell */}
       {isMobile ? (
         /* Mobile Frame (9:16 aspect ratio, sleek modern phone bezel) */
-        <div className="relative w-[385px] h-[780px] max-h-[88vh] bg-slate-950 rounded-[48px] p-3.5 shadow-[0_25px_70px_rgba(0,0,0,0.85)] border-4 border-slate-800 ring-1 ring-slate-700/50 flex flex-col overflow-hidden">
+        <div className="relative w-full max-w-[385px] h-[780px] max-h-[88vh] bg-slate-950 rounded-[48px] p-3.5 shadow-[0_25px_70px_rgba(0,0,0,0.85)] border-4 border-slate-800 ring-1 ring-slate-700/50 flex flex-col overflow-hidden">
           {/* Dynamic Island / Notch */}
           <div className="absolute top-5 left-1/2 -translate-x-1/2 w-28 h-6 bg-slate-900 rounded-full z-40 border border-slate-800/80 flex items-center justify-between px-3">
             <div className="w-2.5 h-2.5 rounded-full bg-slate-950" />
@@ -85,11 +85,12 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
             </div>
 
             {/* Home Indicator Bar */}
-            <div className="w-32 h-1 bg-slate-700/70 rounded-full mx-auto my-2" />
+            <div className="w-32 h-1 bg-slate-700/70 rounded-full mx-auto my-1.5" />
 
-            {/* Fixed Unmovable Watermark Tag */}
-            <div className="absolute bottom-2.5 right-3 bg-slate-950/90 border border-slate-800/90 rounded px-2 py-0.5 text-[9px] font-mono-numbers text-slate-400 select-none pointer-events-none z-30 shadow-md backdrop-blur-sm">
-              Ascend Finance · Prototype · Sample Data
+            {/* Fixed Unmovable Watermark Tag (ultra-compact, subtle opacity, micro typography) */}
+            <div className="absolute bottom-2 right-3 bg-slate-950/85 border border-slate-800/80 rounded px-2 py-0.5 text-[9px] font-mono-numbers text-slate-400/90 select-none pointer-events-none z-30 shadow-sm backdrop-blur-sm flex items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+              <span>Ascend Finance · Prototype · Sample Data</span>
             </div>
           </div>
         </div>
@@ -153,9 +154,9 @@ export const DeviceFrame: React.FC<DeviceFrameProps> = ({
             {/* Virtual Cursor Overlay (during Screen 3) */}
             <VirtualCursor currentTime={currentTime} isMobile={false} />
 
-            {/* Fixed Unmovable Watermark Tag */}
-            <div className="absolute bottom-3 right-4 bg-slate-950/90 border border-slate-800/90 rounded-md px-2.5 py-1 text-[11px] font-mono-numbers text-slate-400 select-none pointer-events-none z-30 shadow-lg backdrop-blur-sm flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+            {/* Fixed Unmovable Watermark Tag (ultra-compact, subtle opacity, micro typography, corner-pinned) */}
+            <div className="absolute bottom-2.5 right-3 bg-slate-950/85 border border-slate-800/80 rounded px-2 py-0.5 text-[9px] sm:text-[10px] font-mono-numbers text-slate-400/90 select-none pointer-events-none z-30 shadow-sm backdrop-blur-sm flex items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
               <span>Ascend Finance · Prototype · Sample Data</span>
             </div>
           </div>

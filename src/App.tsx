@@ -8,7 +8,10 @@ import { AscendLogo } from './components/AscendLogo';
 import { DeviceFrame } from './components/DeviceFrame';
 import { TimelineController } from './components/TimelineController';
 import { BrokerIntegrationModal } from './components/BrokerIntegrationModal';
-import { EyeOff, Video, Server, Network } from 'lucide-react';
+import { DataNarrativeSection } from './components/DataNarrativeSection';
+import { LeadCaptureSection } from './components/LeadCaptureSection';
+import { RoadmapSection } from './components/RoadmapSection';
+import { EyeOff, Video, Network, Sparkles, MonitorPlay, BarChart2, Mail, Compass } from 'lucide-react';
 
 export default function App() {
   // Current playback time in seconds (0.0 to 10.0)
@@ -17,6 +20,10 @@ export default function App() {
   const [deviceMode, setDeviceMode] = useState<'mobile' | 'desktop'>('desktop');
   const [isCleanMode, setIsCleanMode] = useState<boolean>(false);
   const [isIntegrationModalOpen, setIsIntegrationModalOpen] = useState<boolean>(false);
+
+  const demoSectionRef = useRef<HTMLDivElement | null>(null);
+  const roadmapRef = useRef<HTMLDivElement | null>(null);
+  const leadSectionRef = useRef<HTMLDivElement | null>(null);
 
   // High precision animation frame ref
   const lastTimestampRef = useRef<number | null>(null);
@@ -82,6 +89,18 @@ export default function App() {
     lastTimestampRef.current = null;
   };
 
+  const handleScrollToDemo = () => {
+    demoSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleScrollToRoadmap = () => {
+    roadmapRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleScrollToLeadCapture = () => {
+    leadSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   // Keyboard shortcuts listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -135,66 +154,141 @@ export default function App() {
 
       {/* Institutional Top Navbar (Hidden in Clean Mode) */}
       {!isCleanMode && (
-        <header className="w-full border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md px-6 py-4 flex items-center justify-between z-30">
-          <div className="flex items-center gap-4">
-            <AscendLogo size={38} showText={true} mottoText={true} />
+        <header className="sticky top-0 w-full border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md px-4 sm:px-8 py-3.5 flex items-center justify-between z-40">
+          <div className="flex items-center gap-6">
+            <AscendLogo size={36} showText={true} mottoText={false} />
+            <div className="hidden xl:block text-xs text-slate-400 pl-4 border-l border-slate-800 font-medium">
+              Infrastructure for Digital Assets. Built for Real-World Finance.
+            </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Quick Navigation Links */}
+            <button
+              type="button"
+              onClick={handleScrollToDemo}
+              className="hidden md:flex px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-colors items-center gap-1.5"
+            >
+              <MonitorPlay className="w-3.5 h-3.5 text-amber-400" />
+              <span>10s Demo Studio</span>
+            </button>
+
+            {/* Roadmap / On Track Button */}
+            <button
+              type="button"
+              onClick={handleScrollToRoadmap}
+              className="hidden lg:flex px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-colors items-center gap-1.5"
+            >
+              <Compass className="w-3.5 h-3.5 text-amber-400" />
+              <span>On Track</span>
+            </button>
+
+            {/* Early Access Button */}
+            <button
+              type="button"
+              onClick={handleScrollToLeadCapture}
+              className="hidden sm:flex px-3 py-1.5 rounded-lg text-xs font-semibold text-emerald-400 hover:text-emerald-300 hover:bg-emerald-950/40 border border-emerald-500/30 transition-all items-center gap-1.5"
+            >
+              <Mail className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Early Access</span>
+            </button>
+
             {/* Broker & Prop Firm Integration Architecture Button */}
             <button
               type="button"
               onClick={() => setIsIntegrationModalOpen(true)}
-              className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-850 border border-slate-700/80 text-slate-200 hover:text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-sm"
+              className="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700/80 text-slate-200 hover:text-white text-xs font-semibold flex items-center gap-2 transition-all shadow-sm"
               title="See how Ascend Finance integrates with your broker/prop firm withdrawal system (I)"
             >
               <Network className="w-3.5 h-3.5 text-amber-400" />
-              <span>How It Connects to Broker</span>
+              <span>Broker Integration</span>
+              <kbd className="hidden sm:inline px-1 py-0.2 rounded bg-slate-800 text-[10px] text-slate-400 font-mono-numbers">I</kbd>
             </button>
 
-            <div className="hidden lg:flex px-3.5 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-medium items-center gap-2">
+            <div className="hidden lg:flex px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-medium items-center gap-1.5">
               <Video className="w-3.5 h-3.5 text-amber-400" />
-              <span>10s Video Take · 60 FPS</span>
+              <span>60 FPS Sync</span>
             </div>
           </div>
         </header>
       )}
 
-      {/* Center Recording Stage */}
-      <main
-        className={`w-full flex-1 flex flex-col items-center justify-center p-4 sm:p-6 transition-all duration-300 ${
-          isCleanMode ? 'py-8' : 'py-4'
-        }`}
-      >
-        <DeviceFrame
-          deviceMode={deviceMode}
-          currentTime={currentTime}
-        />
-      </main>
-
-      {/* Bottom Timeline & Investor Controls (Hidden in Clean Mode) */}
-      {!isCleanMode && (
-        <footer className="w-full px-4 sm:px-6 pb-6 pt-2 flex flex-col items-center z-30">
-          <TimelineController
-            currentTime={currentTime}
-            isPlaying={isPlaying}
-            onTogglePlay={handleTogglePlay}
-            onRestart={handleRestart}
-            onSeek={handleSeek}
-            deviceMode={deviceMode}
-            onChangeDeviceMode={setDeviceMode}
-            isCleanMode={isCleanMode}
-            onToggleCleanMode={() => setIsCleanMode(true)}
-            onOpenIntegration={() => setIsIntegrationModalOpen(true)}
-          />
-
-          <div className="mt-3 text-center">
-            <p className="text-[11px] text-slate-400">
-              Infrastructure for Digital Assets. Built for Real-World Finance. · Interactive Executive Prototype for Brokers & Prop Firms
-            </p>
+      {/* Main Content Area */}
+      <main className="w-full flex-1 flex flex-col items-center">
+        {/* If Clean Mode is active, render ONLY the DeviceFrame centered for screen recording */}
+        {isCleanMode ? (
+          <div className="w-full flex-1 flex items-center justify-center p-4">
+            <DeviceFrame
+              deviceMode={deviceMode}
+              currentTime={currentTime}
+            />
           </div>
-        </footer>
-      )}
+        ) : (
+          /* Normal Landing Flow: Narrative & Data Storytelling + 10s Demo Studio + Lead Capture Form */
+          <>
+            {/* 1. Narrative & Data Storytelling Section */}
+            <DataNarrativeSection onScrollToDemo={handleScrollToDemo} />
+
+            {/* 2. Interactive 10.0-Second Demo Studio Anchor */}
+            <div
+              ref={demoSectionRef}
+              id="demo-studio"
+              className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-16 flex flex-col items-center space-y-6 border-t border-slate-800/80"
+            >
+              {/* Studio Header */}
+              <div className="text-center space-y-2 max-w-2xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-mono-numbers uppercase tracking-wider">
+                  <MonitorPlay className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Executive Demo Player · 10.0s at 60 FPS</span>
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                  Automated 3-Screen Payout Lifecycle
+                </h2>
+                <p className="text-sm text-slate-400">
+                  Built for LinkedIn screen captures and investor presentations. Zero real funds moved; 100% human governance.
+                </p>
+              </div>
+
+              {/* Device Frame Display (Desktop or Mobile) */}
+              <div className="w-full flex justify-center py-2">
+                <DeviceFrame
+                  deviceMode={deviceMode}
+                  currentTime={currentTime}
+                />
+              </div>
+
+              {/* Timeline Scrubber & Controller */}
+              <div className="w-full flex justify-center">
+                <TimelineController
+                  currentTime={currentTime}
+                  isPlaying={isPlaying}
+                  onTogglePlay={handleTogglePlay}
+                  onRestart={handleRestart}
+                  onSeek={handleSeek}
+                  deviceMode={deviceMode}
+                  onChangeDeviceMode={setDeviceMode}
+                  isCleanMode={isCleanMode}
+                  onToggleCleanMode={() => setIsCleanMode(true)}
+                  onOpenIntegration={() => setIsIntegrationModalOpen(true)}
+                />
+              </div>
+            </div>
+
+            {/* 3. Roadmap / On Track Section */}
+            <div ref={roadmapRef} id="on-track" className="w-full">
+              <RoadmapSection
+                onScrollToEarlyAccess={handleScrollToLeadCapture}
+                onOpenIntegrationModal={() => setIsIntegrationModalOpen(true)}
+              />
+            </div>
+
+            {/* 4. Institutional Lead Capture Form & Footer */}
+            <div ref={leadSectionRef} id="early-access" className="w-full">
+              <LeadCaptureSection onOpenIntegrationModal={() => setIsIntegrationModalOpen(true)} />
+            </div>
+          </>
+        )}
+      </main>
 
       {/* Broker Integration Architecture Modal */}
       <BrokerIntegrationModal
