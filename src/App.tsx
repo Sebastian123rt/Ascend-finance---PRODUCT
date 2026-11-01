@@ -187,9 +187,9 @@ export default function App() {
             <button
               type="button"
               onClick={handleScrollToLeadCapture}
-              className="hidden sm:flex px-3 py-1.5 rounded-lg text-xs font-semibold text-emerald-400 hover:text-emerald-300 hover:bg-emerald-950/40 border border-emerald-500/30 transition-all items-center gap-1.5"
+              className="hidden sm:flex px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 hover:text-white bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-[#F59E0B]/50 transition-all items-center gap-1.5 shadow-sm"
             >
-              <Mail className="w-3.5 h-3.5 text-emerald-400" />
+              <Mail className="w-3.5 h-3.5 text-amber-400" />
               <span>Early Access</span>
             </button>
 
@@ -237,9 +237,11 @@ export default function App() {
             >
               {/* Studio Header */}
               <div className="text-center space-y-2 max-w-2xl">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-mono-numbers uppercase tracking-wider">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-900/90 border border-slate-800 text-xs font-mono-numbers uppercase tracking-wider shadow-sm">
                   <MonitorPlay className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Executive Demo Player · 10.0s at 60 FPS</span>
+                  <span className="text-white font-bold tracking-tight">ASCEND FINANCE</span>
+                  <span className="text-slate-600">·</span>
+                  <span className="text-slate-300">Executive Demo Player (10.0s @ 60 FPS)</span>
                 </div>
                 <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                   Automated 3-Screen Payout Lifecycle

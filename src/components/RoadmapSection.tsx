@@ -62,7 +62,7 @@ export const RoadmapSection: React.FC<RoadmapSectionProps> = ({
       stepLabel: 'Step 04 / Active Now',
       icon: Handshake,
       badge: 'Active Now',
-      badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-500/40 ring-2 ring-amber-400/20',
+      badgeColor: 'bg-[#F59E0B]/10 text-[#F59E0B] border-[#F59E0B]/40 ring-1 ring-[#F59E0B]/20',
       title: 'Current Phase: Talking to Industry Leaders',
       subtitle: 'Prop Firms & Multi-Asset Desks',
       description:
@@ -74,7 +74,7 @@ export const RoadmapSection: React.FC<RoadmapSectionProps> = ({
       stepLabel: 'Step 05 / Upcoming',
       icon: Flag,
       badge: 'Upcoming',
-      badgeColor: 'bg-violet-950 text-violet-300 border-violet-500/40',
+      badgeColor: 'bg-slate-800/60 text-slate-400 border-slate-700',
       title: 'Next Stop: Official Launch',
       subtitle: 'Institutional Production Access',
       description:
@@ -87,14 +87,14 @@ export const RoadmapSection: React.FC<RoadmapSectionProps> = ({
     <section className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-16 space-y-10 select-none border-t border-slate-800/80">
       {/* Section Header */}
       <div className="space-y-4 max-w-3xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/25 text-amber-300 text-xs font-mono-numbers uppercase tracking-wider">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/25 text-[#F59E0B] text-xs font-mono-numbers uppercase tracking-wider">
+          <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
           <span>EXECUTION VELOCITY · FROM PROBLEM TO LAUNCH</span>
         </div>
 
         <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white uppercase leading-tight">
           ON TRACK —{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-rose-400 to-violet-400">
+          <span className="text-[#F59E0B]">
             WE DON&apos;T LIKE MULTI-YEAR DELAYS.
           </span>
         </h2>
@@ -107,26 +107,29 @@ export const RoadmapSection: React.FC<RoadmapSectionProps> = ({
       {/* Visual Roadmap Timeline Grid */}
       <div className="relative">
         {/* Connecting Line behind cards on desktop */}
-        <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-slate-700 via-amber-500/50 to-violet-500/40 -translate-y-6 z-0" />
+        <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-slate-700 via-[#F59E0B]/40 to-slate-800 -translate-y-6 z-0" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 relative z-10">
           {milestones.map((item) => {
             const Icon = item.icon;
             const isCurrent = item.status === 'current';
             const isDone = item.status === 'done';
+            const isUpcoming = item.status === 'upcoming';
 
             return (
               <div
                 key={item.id}
                 className={`rounded-2xl p-5 border flex flex-col justify-between transition-all relative overflow-hidden backdrop-blur-sm ${
                   isCurrent
-                    ? 'bg-gradient-to-b from-amber-950/40 via-slate-900 to-slate-950 border-amber-500/50 shadow-xl shadow-amber-500/10 ring-1 ring-amber-400/30'
+                    ? 'bg-white/[0.05] border-[#F59E0B]/50 shadow-[0_0_15px_rgba(245,158,11,0.15)] ring-1 ring-[#F59E0B]/30'
+                    : isUpcoming
+                    ? 'bg-slate-900/60 border-slate-800/80 opacity-85 hover:opacity-100 hover:border-slate-700'
                     : 'bg-slate-900/80 border-slate-800/90 hover:border-slate-700'
                 }`}
               >
                 {/* Subtle Glow for Current Phase */}
                 {isCurrent && (
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-full blur-xl pointer-events-none" />
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-[#F59E0B]/10 rounded-full blur-xl pointer-events-none" />
                 )}
 
                 <div>
@@ -146,10 +149,10 @@ export const RoadmapSection: React.FC<RoadmapSectionProps> = ({
                   <div
                     className={`w-11 h-11 rounded-xl flex items-center justify-center mb-3 border ${
                       isCurrent
-                        ? 'bg-amber-500/20 border-amber-500/40 text-amber-300'
+                        ? 'bg-[#F59E0B]/10 border-[#F59E0B]/40 text-[#F59E0B]'
                         : isDone
                         ? 'bg-slate-800 border-slate-700 text-slate-300'
-                        : 'bg-violet-950/40 border-violet-500/30 text-violet-300'
+                        : 'bg-slate-800/60 border-slate-700/80 text-slate-400'
                     }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -160,7 +163,7 @@ export const RoadmapSection: React.FC<RoadmapSectionProps> = ({
                     <h3 className="text-base font-bold text-white tracking-tight leading-snug">
                       {item.title}
                     </h3>
-                    <span className="text-xs font-semibold text-amber-400/90 block">
+                    <span className={`text-xs font-semibold block ${isCurrent ? 'text-[#F59E0B]' : isUpcoming ? 'text-slate-400' : 'text-slate-300'}`}>
                       {item.subtitle}
                     </span>
                   </div>
@@ -174,8 +177,8 @@ export const RoadmapSection: React.FC<RoadmapSectionProps> = ({
                 {/* Card Bottom Indicator */}
                 <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono-numbers">
                   {isCurrent ? (
-                    <span className="text-amber-300 flex items-center gap-1 font-semibold">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                    <span className="text-[#F59E0B] flex items-center gap-1 font-semibold">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#F59E0B] animate-pulse" />
                       In Flight
                     </span>
                   ) : isDone ? (
@@ -184,8 +187,8 @@ export const RoadmapSection: React.FC<RoadmapSectionProps> = ({
                       Delivered
                     </span>
                   ) : (
-                    <span className="text-violet-400 flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5 text-violet-400" />
+                    <span className="text-slate-400 flex items-center gap-1">
+                      <Clock className="w-3.5 h-3.5 text-slate-500" />
                       Next Milestone
                     </span>
                   )}

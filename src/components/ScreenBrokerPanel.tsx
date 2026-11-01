@@ -21,8 +21,8 @@ export const ScreenBrokerPanel: React.FC<ScreenBrokerPanelProps> = ({
         <div className="flex items-center gap-2.5 sm:gap-3">
           <AscendLogo size={isMobile ? 28 : 32} />
           <div>
-            <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-amber-400">
-              Ascend Finance
+            <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white">
+              ASCEND FINANCE
             </div>
             <div className="text-lg sm:text-2xl font-bold tracking-tight text-white leading-tight">
               Broker Console
@@ -97,7 +97,7 @@ export const ScreenBrokerPanel: React.FC<ScreenBrokerPanelProps> = ({
               <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-mono-numbers tracking-tight text-white drop-shadow-[0_2px_12px_rgba(255,255,255,0.15)]">
                 1,250
               </span>
-              <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-amber-400">
+              <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-white drop-shadow-[0_2px_12px_rgba(255,255,255,0.15)]">
                 USDC
               </span>
             </div>
@@ -109,9 +109,9 @@ export const ScreenBrokerPanel: React.FC<ScreenBrokerPanelProps> = ({
           {/* Current Status Badge */}
           <div className="mt-3 pt-2.5 border-t border-slate-800/70 flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <Clock className="w-4 h-4 text-amber-400" />
+              <Clock className="w-4 h-4 text-white" />
               <span className="text-xs text-slate-400 font-medium">Status:</span>
-              <span className="text-sm sm:text-base font-bold text-amber-300">
+              <span className="text-sm sm:text-base font-bold text-white">
                 Ready to send
               </span>
             </div>

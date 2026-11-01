@@ -24,62 +24,58 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedValue, setSubmittedValue] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setErrorMessage(null);
 
-    const contact = contactInput.trim();
-
-    if (!contact) {
-      setErrorMsg('Please enter your contact information.');
+    const trimmed = contactInput.trim();
+    if (!trimmed) {
+      setErrorMessage('Please enter your contact information.');
+      setIsSubmitting(false);
       return;
     }
 
     if (!hasConsented) {
-      setErrorMsg('Please authorize sending sandbox documentation.');
+      setErrorMessage('Please authorize sending sandbox documentation.');
+      setIsSubmitting(false);
       return;
     }
 
-    if (
-      contactType === 'email' &&
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)
-    ) {
-      setErrorMsg('Please enter a valid email address.');
+    if (contactType === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      setErrorMessage('Please enter a valid email address.');
+      setIsSubmitting(false);
       return;
     }
-
-    setErrorMsg('');
-    setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/early-access', {
+      const response = await fetch('/api/v1/lead', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contact,
-          contact_type: contactType,
-          consent: true,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contactInput: trimmed, contactType, hasConsented }),
       });
 
-      const result = await response.json();
-
-      if (!response.ok || !result.success) {
-        throw new Error(result.error || 'Unable to submit your request.');
+      // Validar si la respuesta viene vacía antes de parsear a JSON
+      const text = await response.text();
+      let data: any = {};
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch {
+        data = { message: text || `Error del servidor (${response.status})` };
       }
 
-      setSubmittedValue(contact);
+      if (!response.ok) {
+        throw new Error(data.message || data.error || `Error del servidor (${response.status})`);
+      }
+
+      // Éxito: limpiar campo o mostrar estado completado
+      setSubmittedValue(trimmed);
       setIsSubmitted(true);
-      setContactInput('');
-    } catch (error) {
-      setErrorMsg(
-        error instanceof Error
-          ? error.message
-          : 'Something went wrong. Please try again.'
-      );
+    } catch (error: any) {
+      console.error('Error al enviar registro:', error);
+      setErrorMessage(error?.message || 'Ocurrió un error inesperado al enviar los datos.');
     } finally {
       setIsSubmitting(false);
     }
@@ -88,7 +84,8 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
   const handleReset = () => {
     setIsSubmitted(false);
     setSubmittedValue('');
-    setErrorMsg('');
+    setContactInput('');
+    setErrorMessage(null);
   };
 
   return (
@@ -104,7 +101,7 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
 
           <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white uppercase leading-tight">
             FINANCE WILL{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-rose-400 to-emerald-400">
+            <span className="text-[#F59E0B]">
               MOVE DIFFERENTLY.
             </span>
           </h2>
@@ -155,12 +152,12 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
                     type="button"
                     onClick={() => {
                       setContactType(type);
-                      setErrorMsg('');
+                      setErrorMessage(null);
                     }}
                     className={`px-4 py-2 rounded-lg border text-xs font-semibold transition-colors ${
                       contactType === type
-                        ? 'bg-emerald-500/15 border-emerald-500 text-emerald-300'
-                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-white'
+                        ? 'bg-white/10 border-white/30 text-white shadow-sm'
+                        : 'bg-slate-950 border-slate-700 text-slate-400 hover:text-white hover:border-slate-600'
                     }`}
                   >
                     {label}
@@ -178,7 +175,7 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
                     value={contactInput}
                     onChange={(e) => {
                       setContactInput(e.target.value);
-                      if (errorMsg) setErrorMsg('');
+                      if (errorMessage) setErrorMessage(null);
                     }}
                     placeholder={
                       contactType === 'email'
@@ -200,8 +197,8 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
                 </button>
               </div>
 
-              {errorMsg && (
-                <p className="text-xs text-rose-400 font-medium">{errorMsg}</p>
+              {errorMessage && (
+                <p className="text-xs text-rose-400 font-medium">{errorMessage}</p>
               )}
 
               <div className="pt-1 flex items-start gap-2.5">

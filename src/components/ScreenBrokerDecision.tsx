@@ -23,8 +23,8 @@ export const ScreenBrokerDecision: React.FC<ScreenBrokerDecisionProps> = ({
         <div className="flex items-center gap-2.5 sm:gap-3">
           <AscendLogo size={isMobile ? 28 : 32} />
           <div>
-            <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-amber-400">
-              Ascend Finance
+            <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white">
+              ASCEND FINANCE
             </div>
             <div className="text-lg sm:text-2xl font-bold tracking-tight text-white leading-tight">
               Broker Decision
@@ -70,7 +70,7 @@ export const ScreenBrokerDecision: React.FC<ScreenBrokerDecisionProps> = ({
               <span className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-400 block">
                 Amount
               </span>
-              <span className="text-base sm:text-xl font-bold font-mono-numbers text-amber-400">
+              <span className="text-base sm:text-xl font-bold font-mono-numbers text-white">
                 1,250 USDC
               </span>
             </div>

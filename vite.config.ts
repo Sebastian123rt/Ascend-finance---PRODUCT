@@ -5,7 +5,38 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react(),
+      tailwindcss(),
+      {
+        name: 'api-dev-middleware',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            const url = req.url?.split('?')[0];
+            if (url === '/api/v1/lead' || url === '/api/early-access') {
+              if (req.method === 'POST') {
+                let body = '';
+                req.on('data', (chunk) => {
+                  body += chunk;
+                });
+                req.on('end', () => {
+                  res.setHeader('Content-Type', 'application/json');
+                  res.statusCode = 200;
+                  res.end(
+                    JSON.stringify({
+                      success: true,
+                      message: 'Request received successfully.',
+                    })
+                  );
+                });
+                return;
+              }
+            }
+            next();
+          });
+        },
+      },
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

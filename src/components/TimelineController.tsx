@@ -183,7 +183,7 @@ export const TimelineController: React.FC<TimelineControllerProps> = ({
               className="px-3 py-2 rounded-xl bg-slate-800/90 hover:bg-slate-750 border border-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm"
               title="How Ascend connects to your broker/prop firm stack"
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span className="w-2 h-2 rounded-full bg-amber-400" />
               <span className="hidden sm:inline">Broker API Architecture</span>
             </button>
           )}
@@ -218,7 +218,7 @@ export const TimelineController: React.FC<TimelineControllerProps> = ({
 
           {/* Progress fill bar */}
           <div
-            className="absolute top-2 left-0 h-3 bg-gradient-to-r from-amber-500 via-pink-500 to-violet-500 rounded-lg pointer-events-none opacity-80"
+            className="absolute top-2 left-0 h-3 bg-gradient-to-r from-amber-500 to-[#F59E0B] rounded-lg pointer-events-none opacity-90 shadow-sm"
             style={{ width: `${currentPercentage}%` }}
           />
 
@@ -264,7 +264,7 @@ export const TimelineController: React.FC<TimelineControllerProps> = ({
           </span>
         </div>
         <div className="flex items-center gap-2 text-slate-400">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
           <span>Synchronized at 60 FPS</span>
         </div>
       </div>

@@ -37,7 +37,7 @@ export const DataNarrativeSection: React.FC<DataNarrativeSectionProps> = ({
           </div>
 
           <div className="flex items-center gap-2 text-xs font-mono-numbers text-slate-300 bg-slate-900 border border-slate-800 px-3 py-1 rounded-md">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
+            <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />
             <span>Sebastian Avila — Founder, Ascend Finance</span>
           </div>
         </div>
@@ -47,14 +47,12 @@ export const DataNarrativeSection: React.FC<DataNarrativeSectionProps> = ({
           <h1 className="text-2xl sm:text-4xl md:text-[40px] font-extrabold tracking-tight text-white leading-[1.25]">
             “When reviewing institutional trader payouts, we found two broken paths:{' '}
             <span className="text-amber-400">traditional bank wires taking days</span>, or{' '}
-            <span className="text-rose-400">manual crypto transfers with zero audit trails</span>.{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-amber-300">
-              Nothing else.
-            </span>”
+            <span className="text-amber-400">manual crypto transfers with zero audit trails</span>.{' '}
+            <span className="text-white">Nothing else.</span>”
           </h1>
 
           {/* Subtitle / Founder Note */}
-          <p className="text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
+          <p className="text-base sm:text-xl text-white/90 leading-relaxed font-normal">
             “When we looked at the data, legacy banking handled only 31% of desired payout volume,
             while automated digital liquidity moved billions instantly. We realized: that&apos;s where the institutional opportunity is.”
           </p>

@@ -25,8 +25,8 @@ export const ScreenPaymentReview: React.FC<ScreenPaymentReviewProps> = ({
         <div className="flex items-center gap-2.5 sm:gap-3">
           <AscendLogo size={isMobile ? 28 : 32} />
           <div>
-            <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-amber-400">
-              Ascend Finance
+            <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white">
+              ASCEND FINANCE
             </div>
             <div className="text-lg sm:text-2xl font-bold tracking-tight text-white leading-tight">
               Payment Review
@@ -101,7 +101,7 @@ export const ScreenPaymentReview: React.FC<ScreenPaymentReviewProps> = ({
                   <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-semibold block">
                     Estimated Risk Level
                   </span>
-                  <span className="text-xl sm:text-2xl font-extrabold text-amber-400 tracking-tight flex items-center gap-1.5">
+                  <span className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-1.5">
                     Medium risk
                   </span>
                 </div>
