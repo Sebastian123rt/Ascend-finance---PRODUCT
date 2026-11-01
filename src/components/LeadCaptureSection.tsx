@@ -237,11 +237,9 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-4 px-6 rounded-2xl bg-slate-900/40 border border-slate-800/80">
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-400 font-mono-numbers">Official Campaign Anchor:</span>
-            <span className="text-xs font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-rose-400 font-mono-numbers">
-              #InfrastructureForRealWorldFinance
-            </span>
+          <div className="flex items-center gap-1.5 text-xs">
+            <span className="text-gray-400">Official Campaign Anchor: </span>
+            <span className="text-[#F59E0B] font-medium">#InfrastructureForRealWorldFinance</span>
           </div>
 
           <div className="flex items-center gap-2">
